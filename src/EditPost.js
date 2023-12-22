@@ -1,16 +1,21 @@
 import { useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
+import { format } from "date-fns";
+import { useStoreState, useStoreActions } from "easy-peasy";
 
-function EditPost({
-  posts,
-  handleEdit,
-  editBody,
-  setEditBody,
-  editTitle,
-  setEditTitle,
-}) {
+function EditPost() {
   const { id } = useParams();
-  const post = posts.find((post) => post.id.toString() === id);
+  const navigate = useNavigate();
+
+  const editTitle = useStoreState((state) => state.editTitle);
+  const editBody = useStoreState((state) => state.editBody);
+
+  const editPost = useStoreActions((actions) => actions.editPost);
+  const setEditTitle = useStoreActions((actions) => actions.setEditTitle);
+  const setEditBody = useStoreActions((actions) => actions.setEditBody);
+
+  const getPostById = useStoreState((state) => state.getPostById);
+  const post = getPostById(id);
 
   useEffect(() => {
     if (post) {
@@ -18,6 +23,14 @@ function EditPost({
       setEditBody(post.body);
     }
   }, [post, setEditTitle, setEditBody]);
+
+  const handleEdit = (id) => {
+    const datetime = format(new Date(), "MMMM dd, yyyy pp");
+    const updatedPost = { id, title: editTitle, body: editBody, datetime };
+    editPost(updatedPost);
+    navigate(`/post/${id}`);
+  };
+
   return (
     <main className="NewPost">
       {editTitle && (
@@ -39,7 +52,7 @@ function EditPost({
               value={editBody}
               onChange={(e) => setEditBody(e.target.value)}
             />
-            <button type="submit" onClick={() => handleEdit(post.id)}>
+            <button type="button" onClick={() => handleEdit(post.id)}>
               Submit
             </button>
           </form>

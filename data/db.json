@@ -23,6 +23,18 @@
       "title": "Testing a 4th post",
       "body": "Some more testing paragraphs!",
       "datetime": "December 22, 2023 7:40:45 AM"
+    },
+    {
+      "id": 5,
+      "title": "Almost finishing this course",
+      "body": "nice",
+      "datetime": "December 22, 2023 11:01:51 AM"
+    },
+    {
+      "id": 6,
+      "title": "Super fun Study",
+      "body": "Never stop studying!!",
+      "datetime": "December 22, 2023 12:35:11 PM"
     }
   ]
 }

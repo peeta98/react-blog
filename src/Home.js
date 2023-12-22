@@ -1,6 +1,9 @@
 import Feed from "./Feed";
+import { useStoreState } from "easy-peasy";
 
-function Home({ posts, fetchError, isLoading }) {
+function Home({ isLoading, fetchError }) {
+  const posts = useStoreState((state) => state.searchResults);
+
   return (
     <main className="Home">
       {isLoading && <p className="statusMsg">Loading posts...</p>}
